@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import RouterText from "./router/gutendex.js";
+import RouterDictionary from "./router/lexicala.js";
 
 class Server {
   constructor(port) {
@@ -15,6 +16,7 @@ class Server {
     this.app.use(cors());
 
     this.app.use("/api/lib", new RouterText().start());
+    this.app.use("/api/dict", new RouterDictionary().start());
 
     const PORT = this.port;
 
