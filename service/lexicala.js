@@ -15,7 +15,6 @@ class Service {
       url: this.baseURL,
       params: {
         text: text,
-        language: language,
       },
       headers: {
         "X-RapidAPI-Key": this.apiKey,
