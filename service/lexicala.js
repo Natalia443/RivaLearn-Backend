@@ -9,12 +9,13 @@ class Service {
     this.apiKey = process.env.LEXICALA_API_KEY;
   }
 
-  getMeaning = async (text) => {
+  getMeaning = async (text, language) => {
     const options = {
       method: "GET",
       url: this.baseURL,
       params: {
         text: text,
+        language: language,
       },
       headers: {
         "X-RapidAPI-Key": this.apiKey,

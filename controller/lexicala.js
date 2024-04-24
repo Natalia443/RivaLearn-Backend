@@ -7,8 +7,8 @@ class Controller {
 
   getMeaning = async (req, res) => {
     try {
-      const { text } = req.query;
-      const data = await this.service.getMeaning(text);
+      const { text, language } = req.query;
+      const data = await this.service.getMeaning(text, language);
       res.json(data);
     } catch (error) {
       console.error("Error fetching meaning:", error.message);
