@@ -9,6 +9,7 @@ class Router {
 
   start() {
     this.router.post("/user", this.controller.saveUser);
+    this.router.post("/login", this.controller.login);
 
     return this.router;
   }
