@@ -27,10 +27,25 @@ class UserDAO {
     try {
       const query = `
         INSERT INTO refresh_tokens (user_id, token, expires_at)
-        VALUES ($1, crypt($2, gen_salt('bf)), NOW() + INTERVAL '7 days')
+        VALUES ($1, crypt($2, gen_salt('bf')), NOW() + INTERVAL '7 days')
       `;
       const values = [userId, refreshToken];
       await pool.query(query, values);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getValidRefreshToken(userId) {
+    try {
+      const query = `
+        SELECT * FROM refresh_tokens
+        WHERE user_id = $1 AND expires_at > NOW()
+        ORDER BY expires_at DESC
+        LIMIT 1
+      `;
+      const refreshToken = await pool.query(query, [userId]);
+      return refreshToken.rows[0];
     } catch (error) {
       throw error;
     }

@@ -27,9 +27,20 @@ class UserService {
       if (!user) {
         throw new Error("Usuario no encontrado o contraseña incorrecta");
       }
-      const tokens = this.generateTokens(user);
-      await this.saveRefreshToken(user.id, tokens.refresh_token);
-      return tokens;
+
+      const existingRefreshToken = await this.model.getValidRefreshToken(
+        user.id
+      );
+      if (existingRefreshToken) {
+        return {
+          access_token: this.generateUserToken(user, "1h"),
+          refresh_token: existingRefreshToken,
+        };
+      } else {
+        const tokens = this.generateTokens(user);
+        await this.saveRefreshToken(user.id, tokens.refresh_token);
+        return tokens;
+      }
     } catch (error) {
       throw error;
     }
@@ -58,6 +69,15 @@ class UserService {
   async saveRefreshToken(userId, refreshToken) {
     try {
       await this.model.saveRefreshToken(userId, refreshToken);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async checkRefreshToken(userId) {
+    try {
+      const refreshToken = await this.model.getValidRefreshToken(userId);
+      return refreshToken;
     } catch (error) {
       throw error;
     }
