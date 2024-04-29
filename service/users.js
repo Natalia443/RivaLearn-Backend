@@ -1,6 +1,7 @@
 import UserDAO from "../model/DAO/rivalearnPSQL.js";
 import { validate } from "./validation/users.js";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
 class UserService {
   constructor() {
