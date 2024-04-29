@@ -17,7 +17,8 @@ class UserDAO {
       const query =
         "SELECT * FROM users WHERE username = $1 AND password = crypt($2, password)";
       const user = await pool.query(query, [username, password]);
-      return user;
+      const firstUser = user.rows[0];
+      return firstUser;
     } catch (error) {
       throw error;
     }

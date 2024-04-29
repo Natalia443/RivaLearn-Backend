@@ -35,12 +35,16 @@ class UserService {
       if (existingRefreshToken) {
         return {
           access_token: this.generateUserToken(user, "1h"),
-          refresh_token: existingRefreshToken,
+          refresh_token: existingRefreshToken.token,
+          username: user.username,
         };
       } else {
         const tokens = this.generateTokens(user);
         await this.saveRefreshToken(user.id, tokens.refresh_token);
-        return tokens;
+        return {
+          ...tokens,
+          username: user.username,
+        };
       }
     } catch (error) {
       throw error;
