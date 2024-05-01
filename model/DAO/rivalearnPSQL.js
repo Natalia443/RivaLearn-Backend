@@ -24,6 +24,16 @@ class UserDAO {
     }
   }
 
+  async getUserId(username) {
+    try {
+      const query = "SELECT id FROM users WHERE username = $1";
+      const userId = await pool.query(query, [username]);
+      return userId;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async saveRefreshToken(userId, refreshToken) {
     try {
       const query = `
@@ -47,6 +57,26 @@ class UserDAO {
       `;
       const refreshToken = await pool.query(query, [userId]);
       return refreshToken.rows[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getDecks(userId) {
+    try {
+      const query = "SELECT * FROM decks WHERE user_id = $1";
+      const decks = await pool.query(query, [userId]);
+      return decks;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async saveDeck(userId, deckname) {
+    try {
+      const query = "INSERT INTO decks(user_id, name) VALUES($1, $2)";
+      const deck = await pool.query(query, [userId, deckname]);
+      return deck;
     } catch (error) {
       throw error;
     }
