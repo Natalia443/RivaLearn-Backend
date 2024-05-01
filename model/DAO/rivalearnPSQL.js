@@ -28,7 +28,7 @@ class UserDAO {
     try {
       const query = "SELECT id FROM users WHERE username = $1";
       const userId = await pool.query(query, [username]);
-      return userId;
+      return userId.rows[0].id;
     } catch (error) {
       throw error;
     }
