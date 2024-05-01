@@ -7,7 +7,7 @@ class Controller {
 
   getDecks = async (req, res) => {
     try {
-      const { username } = req.query;
+      const { username } = req.params;
       const decks = await this.service.getDecks(username);
       res.json(decks);
     } catch (error) {
@@ -19,8 +19,7 @@ class Controller {
   saveDeck = async (req, res) => {
     try {
       const { username, deckname } = req.body;
-      const deck = await this.service.saveDeck(username, deckname);
-      res.json(deck);
+      await this.service.saveDeck(username, deckname);
     } catch (error) {
       console.error("Error fetching decks:", error.message);
       res.status(400).json({ error: error.message });

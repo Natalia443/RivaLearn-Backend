@@ -75,8 +75,7 @@ class UserDAO {
   async saveDeck(userId, deckname) {
     try {
       const query = "INSERT INTO decks(user_id, name) VALUES($1, $2)";
-      const deck = await pool.query(query, [userId, deckname]);
-      return deck;
+      await pool.query(query, [userId, deckname]);
     } catch (error) {
       throw error;
     }

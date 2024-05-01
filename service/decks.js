@@ -18,8 +18,7 @@ class Service {
   async saveDeck(username, deckname) {
     try {
       const userId = await this.model.getUserId(username);
-      const deck = await this.model.saveDeck(userId, deckname);
-      return deck;
+      await this.model.saveDeck(userId, deckname);
     } catch (error) {
       throw error;
     }
