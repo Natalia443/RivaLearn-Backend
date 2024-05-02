@@ -65,7 +65,10 @@ class UserDAO {
   async getDecks(userId) {
     try {
       const query = "SELECT * FROM decks WHERE user_id = $1";
-      const decks = await pool.query(query, [userId]);
+      const decksQuery = await pool.query(query, [userId]);
+      const decks = decksQuery.rows.map((row) => row.name);
+      console.log("decksQuery" + decksQuery);
+      console.log("decks" + decks);
       return decks;
     } catch (error) {
       throw error;
