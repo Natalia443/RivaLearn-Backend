@@ -21,7 +21,7 @@ class Controller {
       const { username, deckname } = req.body;
       await this.service.saveDeck(username, deckname);
     } catch (error) {
-      console.error("Error fetching decks:", error.message);
+      console.error("Error saving deck:", error.message);
       res.status(400).json({ error: error.message });
     }
   };

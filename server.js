@@ -4,6 +4,7 @@ import RouterText from "./router/gutendex.js";
 import RouterDictionary from "./router/lexicala.js";
 import RouterUsers from "./router/users.js";
 import RouterDecks from "./router/decks.js";
+import RouterFlashcards from "./router/flashcards.js";
 
 class Server {
   constructor(port) {
@@ -21,6 +22,7 @@ class Server {
     this.app.use("/api/dict", new RouterDictionary().start());
     this.app.use("/api/users", new RouterUsers().start());
     this.app.use("/api/decks", new RouterDecks().start());
+    this.app.use("/api/flashcards", new RouterFlashcards().start());
 
     const PORT = this.port;
 

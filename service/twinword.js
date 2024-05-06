@@ -3,34 +3,34 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-class Service {
+class TwinwordApiClient {
   constructor() {
-    this.baseURL = "https://lexicala1.p.rapidapi.com/search";
+    this.baseURL =
+      "https://twinword-word-graph-dictionary.p.rapidapi.com/example/";
     this.apiKey = process.env.RAPIDAPI_API_KEY;
   }
 
-  getMeaning = async (text, language) => {
+  async getSentence(word) {
     const options = {
       method: "GET",
       url: this.baseURL,
       params: {
-        text: text,
-        language: language,
+        entry: word,
       },
       headers: {
         "X-RapidAPI-Key": this.apiKey,
-        "X-RapidAPI-Host": "lexicala1.p.rapidapi.com",
+        "X-RapidAPI-Host": "twinword-word-graph-dictionary.p.rapidapi.com",
       },
     };
 
     try {
       const response = await axios.request(options);
-      return response.data;
+      return response.data.example[0];
     } catch (error) {
       console.error(error);
-      throw new Error("Error fetching Lexicala API.");
+      throw new Error("Error fetching Twinword's examples API.");
     }
-  };
+  }
 }
 
-export default Service;
+export default TwinwordApiClient;
