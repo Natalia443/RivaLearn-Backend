@@ -3,7 +3,7 @@ import * as deepl from "deepl-node";
 class DeeplApiClient {
   constructor() {
     this.apiKey = process.env.DEEPL_API_KEY;
-    this.translator = new deepl.Translator(apiKey);
+    this.translator = new deepl.Translator(this.apiKey);
   }
 
   async translate(text, sourceLang, targetLang) {
