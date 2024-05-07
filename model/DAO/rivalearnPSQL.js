@@ -96,7 +96,12 @@ class UserDAO {
     try {
       const query = "SELECT * FROM flashcards WHERE deck_id = $1";
       const flashcardsQuery = await pool.query(query, [deckId]);
-      const flashcards = flashcardsQuery.rows.map((row) => row.name);
+      const flashcards = flashcardsQuery.rows.map((row) => ({
+        vocab: row.vocab,
+        vocab_translated: row.vocab_translated,
+        vocab_example: row.vocab_example,
+        vocab_example_translated: row.vocab_example_translated,
+      }));
       return flashcards;
     } catch (error) {
       throw error;
