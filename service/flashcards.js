@@ -21,7 +21,7 @@ class Service {
 
   async getSentence(sourceLang, word) {
     let englishWord;
-    if (sourceLang !== "en-US") {
+    if (sourceLang !== "en") {
       englishWord = await this.deeplApiClient.translate(
         word,
         sourceLang,
@@ -37,6 +37,7 @@ class Service {
   async saveFlashcard(deckname, vocab, sourceLang, targetLang) {
     try {
       const deckId = await this.model.getDeckId(deckname);
+      let sourceToTargetCode = await this.formatLangCode(sourceLang);
       const translatedVocab = await this.deeplApiClient.translate(
         vocab,
         sourceLang,
@@ -45,12 +46,12 @@ class Service {
       const sentence = await this.getSentence(sourceLang, vocab);
       const sourceLangSentence = await this.deeplApiClient.translate(
         sentence,
-        "en-US",
-        sourceLang
+        "en",
+        sourceToTargetCode
       );
       const targetLangSentence = await this.deeplApiClient.translate(
         sentence,
-        "en-US",
+        "en",
         targetLang
       );
       await this.model.saveFlashcard(
@@ -63,6 +64,16 @@ class Service {
     } catch (error) {
       throw error;
     }
+  }
+
+  async formatLangCode(code) {
+    let formattedCode = code;
+    if (code === "en") {
+      formattedCode = "en-US";
+    } else if (code === "pt") {
+      formattedCode = "pt-BR";
+    }
+    return formattedCode;
   }
 }
 
