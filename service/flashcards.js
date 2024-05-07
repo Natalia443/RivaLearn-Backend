@@ -21,8 +21,12 @@ class Service {
 
   async getSentence(sourceLang, word) {
     let englishWord;
-    if (sourceLang !== "en") {
-      englishWord = await this.deeplApiClient.translate(word, sourceLang, "en");
+    if (sourceLang !== "en-US") {
+      englishWord = await this.deeplApiClient.translate(
+        word,
+        sourceLang,
+        "en-US"
+      );
     } else {
       englishWord = word;
     }
@@ -41,12 +45,12 @@ class Service {
       const sentence = await this.getSentence(sourceLang, vocab);
       const sourceLangSentence = await this.deeplApiClient.translate(
         sentence,
-        "en",
+        "en-US",
         sourceLang
       );
       const targetLangSentence = await this.deeplApiClient.translate(
         sentence,
-        "en",
+        "en-US",
         targetLang
       );
       await this.model.saveFlashcard(
