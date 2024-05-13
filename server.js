@@ -5,6 +5,7 @@ import RouterDictionary from "./router/lexicala.js";
 import RouterUsers from "./router/users.js";
 import RouterDecks from "./router/decks.js";
 import RouterFlashcards from "./router/flashcards.js";
+import RouterQuiz from "./router/quiz.js";
 
 class Server {
   constructor(port) {
@@ -23,6 +24,7 @@ class Server {
     this.app.use("/api/users", new RouterUsers().start());
     this.app.use("/api/decks", new RouterDecks().start());
     this.app.use("/api/flashcards", new RouterFlashcards().start());
+    this.app.use("/api/quiz", new RouterQuiz().start());
 
     const PORT = this.port;
 

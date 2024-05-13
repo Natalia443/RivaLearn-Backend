@@ -129,6 +129,84 @@ class UserDAO {
       throw error;
     }
   }
+
+  async getFlashcardId(deckId, flashcard) {
+    try {
+      const query =
+        "SELECT id FROM flashcards WHERE deck_id = $1 AND vocab = $2";
+      const flashcardId = await pool.query(query, [deckId, flashcard]);
+      return flashcardId.rows[0].id;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getFlashcardName(flashcardId) {
+    try {
+      const query = "SELECT vocab FROM flashcards WHERE id = $1";
+      const flashcard = await pool.query(query, [flashcardId]);
+      return flashcard.rows[0].vocab;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async saveStats(userId, flashcardId, success, fail) {
+    try {
+      const query =
+        "INSERT INTO quiz_stats(user_id, flashcard_id, successful_attempts, failed_attempts) VALUES($1, $2, $3, $4)";
+      await pool.query(query, [userId, flashcardId, success, fail]);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async changeStats(userId, flashcardId, success, fail) {
+    try {
+      const query =
+        "UPDATE quiz_stats SET successful_attempts = $1, failed_attempts = $2 WHERE user_id = $3 AND flashcard_id = $4";
+      await pool.query(query, [success, fail, userId, flashcardId]);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getStats(userId) {
+    try {
+      const query = "SELECT * FROM quiz_stats WHERE user_id = $1";
+      const statsQuery = await pool.query(query, [userId]);
+      const stats = await Promise.all(
+        statsQuery.rows.map(async (row) => {
+          const flashcardName = await this.getFlashcardName(row.flashcard_id);
+          return {
+            flashcard: flashcardName,
+            success: row.successful_attempts,
+            fail: row.failed_attempts,
+            total: row.total_attempts,
+          };
+        })
+      );
+      return stats;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getFlashcardStats(userId, flashcardId) {
+    try {
+      const query =
+        "SELECT * FROM quiz_stats WHERE user_id = $1 AND flashcard_id = $2";
+      const statsQuery = await pool.query(query, [userId, flashcardId]);
+      const stats = statsQuery.rows.map((row) => ({
+        success: row.successful_attempts,
+        fail: row.failed_attempts,
+        total: row.total_attempts,
+      }));
+      return stats;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default UserDAO;
