@@ -24,16 +24,6 @@ class UserDAO {
     }
   }
 
-  async getUserId(username) {
-    try {
-      const query = "SELECT id FROM users WHERE username = $1";
-      const userId = await pool.query(query, [username]);
-      return userId.rows[0].id;
-    } catch (error) {
-      throw error;
-    }
-  }
-
   async saveRefreshToken(userId, refreshToken) {
     try {
       const query = `
@@ -164,7 +154,7 @@ class UserDAO {
   async changeStats(userId, flashcardId, success, fail) {
     try {
       const query =
-        "UPDATE quiz_stats SET successful_attempts = $1, failed_attempts = $2 WHERE user_id = $3 AND flashcard_id = $4";
+        "UPDATE quiz_stats SET successful_attempts = successful_attempts + $1, failed_attempts = failed_attempts + $2 WHERE user_id = $3 AND flashcard_id = $4";
       await pool.query(query, [success, fail, userId, flashcardId]);
     } catch (error) {
       throw error;

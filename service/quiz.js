@@ -5,9 +5,8 @@ class Service {
     this.model = new DAO();
   }
 
-  async saveStats(deckname, username, flashcard, success, fail) {
+  async saveStats(deckname, userId, flashcard, success, fail) {
     try {
-      const userId = await this.model.getUserId(username);
       const deckId = await this.model.getDeckId(deckname);
       const flashcardId = await this.model.getFlashcardId(deckId, flashcard);
       const existingStat = await this.model.getFlashcardStats(
@@ -24,9 +23,8 @@ class Service {
     }
   }
 
-  async getStats(username) {
+  async getStats(userId) {
     try {
-      const userId = await this.model.getUserId(username);
       const stats = await this.model.getStats(userId);
       return stats;
     } catch (error) {

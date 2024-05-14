@@ -37,6 +37,7 @@ class UserService {
           access_token: this.generateUserToken(user, "1h"),
           refresh_token: existingRefreshToken.token,
           username: user.username,
+          user_id: user.id,
         };
       } else {
         const tokens = this.generateTokens(user);
@@ -44,6 +45,7 @@ class UserService {
         return {
           ...tokens,
           username: user.username,
+          user_id: user.id,
         };
       }
     } catch (error) {

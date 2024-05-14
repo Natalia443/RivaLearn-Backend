@@ -5,9 +5,8 @@ class Service {
     this.model = new DeckDAO();
   }
 
-  async getDecks(username) {
+  async getDecks(userId) {
     try {
-      const userId = await this.model.getUserId(username);
       const decks = await this.model.getDecks(userId);
       return decks;
     } catch (error) {
@@ -15,9 +14,8 @@ class Service {
     }
   }
 
-  async saveDeck(username, deckname) {
+  async saveDeck(userId, deckname) {
     try {
-      const userId = await this.model.getUserId(username);
       await this.model.saveDeck(userId, deckname);
     } catch (error) {
       throw error;

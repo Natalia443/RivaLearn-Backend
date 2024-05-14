@@ -8,7 +8,7 @@ class Router {
   }
 
   start() {
-    this.router.get("/get/:username", this.controller.getDecks);
+    this.router.get("/get/:userId", this.controller.getDecks);
     this.router.post("/create", this.controller.saveDeck);
 
     return this.router;

@@ -9,7 +9,7 @@ class Router {
 
   start() {
     this.router.post("/stats", this.controller.saveStats);
-    this.router.get("/get/:username", this.controller.getStats);
+    this.router.get("/get/:userId", this.controller.getStats);
     return this.router;
   }
 }

@@ -7,14 +7,8 @@ class Controller {
 
   saveStats = async (req, res) => {
     try {
-      const { deckname, username, flashcard, success, fail } = req.body;
-      await this.service.saveStats(
-        deckname,
-        username,
-        flashcard,
-        success,
-        fail
-      );
+      const { deckname, userId, flashcard, success, fail } = req.body;
+      await this.service.saveStats(deckname, userId, flashcard, success, fail);
     } catch (error) {
       console.error("Error saving stats:", error.message);
       res.status(500).json({ error: "Internal Server Error" });
@@ -23,8 +17,8 @@ class Controller {
 
   getStats = async (req, res) => {
     try {
-      const { username } = req.params;
-      const stats = await this.service.getStats(username);
+      const { userId } = req.params;
+      const stats = await this.service.getStats(userId);
       res.json(stats);
     } catch (error) {
       console.error("Error getting stats:", error.message);

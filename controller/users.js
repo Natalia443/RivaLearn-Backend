@@ -18,8 +18,8 @@ class Controller {
   login = async (req, res) => {
     try {
       const { username, password } = req.body;
-      const tokens = await this.service.login(username, password);
-      res.json(tokens);
+      const userData = await this.service.login(username, password);
+      res.json(userData);
     } catch (error) {
       console.error("Error signing in:", error.message);
       res.status(400).json({ error: error.message });
