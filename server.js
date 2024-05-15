@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import swaggerUi from 'swagger-ui-express'
+import swaggerSpec from "./swagger.js";
 import RouterText from "./router/gutendex.js";
 import RouterDictionary from "./router/lexicala.js";
 import RouterUsers from "./router/users.js";
@@ -25,6 +27,9 @@ class Server {
     this.app.use("/api/decks", new RouterDecks().start());
     this.app.use("/api/flashcards", new RouterFlashcards().start());
     this.app.use("/api/quiz", new RouterQuiz().start());
+
+    // SWAGGER
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
     const PORT = this.port;
 
