@@ -9,6 +9,7 @@ class Controller {
     try {
       const { username, password, email } = req.body;
       await this.service.saveUser(username, password, email);
+      res.status(200).json({  "message": "OK"});
     } catch (error) {
       console.error("Error saving user:", error.message);
       res.status(400).json({ error: error.message });

@@ -20,6 +20,7 @@ class Controller {
     try {
       const { deckname, vocab, sourceLang, targetLang } = req.body;
       await this.service.saveFlashcard(deckname, vocab, sourceLang, targetLang);
+      res.status(200).json({  "message": "OK"});
     } catch (error) {
       console.error("Error saving flashcard:", error.message);
       res.status(400).json({ error: error.message });

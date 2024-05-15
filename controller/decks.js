@@ -20,6 +20,7 @@ class Controller {
     try {
       const { userId, deckname } = req.body;
       await this.service.saveDeck(userId, deckname);
+      res.status(200).json({  "message": "OK"});
     } catch (error) {
       console.error("Error saving deck:", error.message);
       res.status(400).json({ error: error.message });

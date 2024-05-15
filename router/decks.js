@@ -30,20 +30,27 @@ class Router {
      *        description: error de servidor
      */
     this.router.post("/create", this.controller.saveDeck);
-    /**
+   /**
      * @swagger
      * /api/decks/create:
      *  post:
      *    summary: crear deck
      *    tags:
      *      - Deck
+     *    requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *          schema:
+     *            $ref: '#/components/schemas/DeckSchema'
      *    responses: 
      *      200:
      *        description: creacion de Deck con éxito
+     *      400:
+     *        description: error en la carga de datos
      *      500:
      *        description: error de servidor
      */
-
     return this.router;
   }
 }
