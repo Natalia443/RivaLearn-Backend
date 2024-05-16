@@ -11,14 +11,14 @@ class Router {
     this.router.get("/get/:userId", this.controller.getDecks);
     /**
      * @swagger
-     * /api/decks/get/{username}:
+     * /api/decks/get/{userId}:
      *  get:
      *    summary: obtener deck mediante el Id
      *    tags:
      *      - Deck
      *    parameters:
      *      - in: path
-     *        name: username
+     *        name: userId
      *        required: true
      *        description: Id del usuario
      *    responses: 

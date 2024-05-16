@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const options = {
     definition: {
         openapi: "3.0.0",
-        info: { title: "rivalearn API doc", version: "1.0.0"},
+        info: { title: "RivaLearn API Documentation", version: "1.1.0"},
     },
     apis: [`${path.join(__dirname, './router/*.js')}`]
 };
