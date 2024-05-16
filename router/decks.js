@@ -19,6 +19,8 @@ class Router {
      *    parameters:
      *      - in: path
      *        name: userId
+     *        schema:
+     *          type: integer
      *        required: true
      *        description: Id del usuario
      *    responses: 

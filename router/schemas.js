@@ -23,18 +23,54 @@
  *            example: theUser
  *            description: nombre del usuario
  *          password:
- *            minLength: 8
  *            type: string
- *            example: '12345'
+ *            minLenght: 8
+ *            example: 'abc12345'
  *            description: contraseña del usuario
  *          email:
  *            type: string
  *            format: email
  *            description: correo electronico del usuario
  *        required:
- *          - idUser
- *          - deckName           
+ *          - username
+ *          - password
+ *          - email
+ *      UserSchemaLog:
+ *        type: object
+ *        properties:
+ *          username:
+ *            type: string
+ *            example: theUser
+ *            description: nombre del usuario
+ *          password:
+ *            type: string
+ *            example: 'abc12345'
+ *            description: contraseña del usuario
+ *        required:
+ *          - username
+ *          - password  
+ *      FlashcardSchema:
+ *        type: object
+ *        properties:
+ *          deckname:
+ *            type: string
+ *            description: Nombre del deck
+ *          vocab:
+ *            type: string
+ *            description: Palabra que quiere guardar en la flashcard
+ *          sourceLang:
+ *            type: string
+ *            description: Idioma de la palabra ingresada
+ *          targetLang:
+ *            type: string
+ *            description: Idioma al que se quiere traducir la palabra
+ *        required:
+ *          - deckname
+ *          - vocab
+ *          - sourceLang
+ *          - targetLang               
  */
+
 
 
 

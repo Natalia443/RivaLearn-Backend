@@ -15,7 +15,7 @@ class Router {
     *  post:
     *    summary: registrar usuario
     *    tags:
-    *      - user
+    *      - User
     *    requestBody:
     *      required: true
     *      content:
@@ -33,6 +33,27 @@ class Router {
 
 
     this.router.post("/login", this.controller.login);
+    /**
+     * @swagger
+     * /api/users/login:
+     *  post:
+     *    summary: Acceso del usuario
+     *    tags:
+     *      - User
+     *    requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *          schema:
+     *            $ref: '#/components/schemas/UserSchemaLog'
+     *    responses: 
+     *      200:
+     *        description: El usuario ingresó con exito
+     *      400:
+     *        description: Error en la carga del usuario
+     *      500:
+     *        description: Error de servidor
+     */
 
     return this.router;
   }
