@@ -48,13 +48,14 @@
  *            description: contraseña del usuario
  *        required:
  *          - username
- *          - password  
+ *          - password
  *      FlashcardSchema:
  *        type: object
  *        properties:
- *          deckname:
- *            type: string
- *            description: Nombre del deck
+ *          deckId:
+ *            type: integer
+ *            format: int64
+ *            description: ID del deck
  *          vocab:
  *            type: string
  *            description: Palabra que quiere guardar en la flashcard
@@ -68,9 +69,5 @@
  *          - deckname
  *          - vocab
  *          - sourceLang
- *          - targetLang               
+ *          - targetLang
  */
-
-
-
-

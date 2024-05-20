@@ -56,7 +56,10 @@ class UserDAO {
     try {
       const query = "SELECT * FROM decks WHERE user_id = $1";
       const decksQuery = await pool.query(query, [userId]);
-      const decks = decksQuery.rows.map((row) => row.name);
+      const decks = decksQuery.rows.map((row) => ({
+        name: row.name,
+        deck_id: row.id,
+      }));
       return decks;
     } catch (error) {
       throw error;
@@ -67,16 +70,6 @@ class UserDAO {
     try {
       const query = "INSERT INTO decks(user_id, name) VALUES($1, $2)";
       await pool.query(query, [userId, deckname]);
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getDeckId(deckname) {
-    try {
-      const query = "SELECT id FROM decks WHERE name = $1";
-      const deckId = await pool.query(query, [deckname]);
-      return deckId.rows[0].id;
     } catch (error) {
       throw error;
     }

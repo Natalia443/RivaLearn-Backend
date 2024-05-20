@@ -9,9 +9,8 @@ class Service {
     this.deeplApiClient = new DeeplApiClient();
   }
 
-  async getFlashcards(deckname) {
+  async getFlashcards(deckId) {
     try {
-      const deckId = await this.model.getDeckId(deckname);
       const flashcards = await this.model.getFlashcards(deckId);
       return flashcards;
     } catch (error) {
@@ -34,9 +33,8 @@ class Service {
     return sentence;
   }
 
-  async saveFlashcard(deckname, vocab, sourceLang, targetLang) {
+  async saveFlashcard(deckId, vocab, sourceLang, targetLang) {
     try {
-      const deckId = await this.model.getDeckId(deckname);
       let sourceToTargetCode = await this.formatLangCode(sourceLang);
       const translatedVocab = await this.deeplApiClient.translate(
         vocab,
