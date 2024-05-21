@@ -80,6 +80,7 @@ class UserDAO {
       const query = "SELECT * FROM flashcards WHERE deck_id = $1";
       const flashcardsQuery = await pool.query(query, [deckId]);
       const flashcards = flashcardsQuery.rows.map((row) => ({
+        id: row.id,
         vocab: row.vocab,
         vocab_translated: row.vocab_translated,
         vocab_example: row.vocab_example,
@@ -108,17 +109,6 @@ class UserDAO {
         sourceLangSentence,
         targetLangSentence,
       ]);
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getFlashcardId(deckId, flashcard) {
-    try {
-      const query =
-        "SELECT id FROM flashcards WHERE deck_id = $1 AND vocab = $2";
-      const flashcardId = await pool.query(query, [deckId, flashcard]);
-      return flashcardId.rows[0].id;
     } catch (error) {
       throw error;
     }

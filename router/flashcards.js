@@ -20,7 +20,7 @@ class Router {
      *      - in: path
      *        name: deckId
      *        required: true
-     *        description: Nombre del deck
+     *        description: ID del deck
      *    responses:
      *      200:
      *        description: Flashcards obtenidas con éxito

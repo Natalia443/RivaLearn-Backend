@@ -66,7 +66,7 @@
  *            type: string
  *            description: Idioma al que se quiere traducir la palabra
  *        required:
- *          - deckname
+ *          - deckId
  *          - vocab
  *          - sourceLang
  *          - targetLang
