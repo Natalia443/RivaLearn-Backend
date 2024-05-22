@@ -5,16 +5,13 @@ class Service {
     this.model = new DAO();
   }
 
-  async saveStats(userId, flashcardId, success, fail) {
+  async saveStats(userId, success, total) {
     try {
-      const existingStat = await this.model.getFlashcardStats(
-        userId,
-        flashcardId
-      );
+      const existingStat = await this.model.getFlashcardStats(userId);
       if (existingStat && existingStat.length > 0) {
-        await this.model.changeStats(userId, flashcardId, success, fail);
+        await this.model.changeStats(userId, success, total);
       } else {
-        await this.model.saveStats(userId, flashcardId, success, fail);
+        await this.model.saveStats(userId, success, total);
       }
     } catch (error) {
       throw error;

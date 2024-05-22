@@ -124,21 +124,21 @@ class UserDAO {
     }
   }
 
-  async saveStats(userId, flashcardId, success, fail) {
+  async saveStats(userId, success, total) {
     try {
       const query =
-        "INSERT INTO quiz_stats(user_id, flashcard_id, successful_attempts, failed_attempts) VALUES($1, $2, $3, $4)";
-      await pool.query(query, [userId, flashcardId, success, fail]);
+        "INSERT INTO quiz_stats(user_id, successful_attempts, total_attempts) VALUES($1, $2, $3)";
+      await pool.query(query, [userId, success, total]);
     } catch (error) {
       throw error;
     }
   }
 
-  async changeStats(userId, flashcardId, success, fail) {
+  async changeStats(userId, success, total) {
     try {
       const query =
-        "UPDATE quiz_stats SET successful_attempts = successful_attempts + $1, failed_attempts = failed_attempts + $2 WHERE user_id = $3 AND flashcard_id = $4";
-      await pool.query(query, [success, fail, userId, flashcardId]);
+        "UPDATE quiz_stats SET successful_attempts = successful_attempts + $1, total_attempts = total_attempts + $2 WHERE user_id = $3";
+      await pool.query(query, [success, userId, total]);
     } catch (error) {
       throw error;
     }
@@ -165,14 +165,12 @@ class UserDAO {
     }
   }
 
-  async getFlashcardStats(userId, flashcardId) {
+  async getFlashcardStats(userId) {
     try {
-      const query =
-        "SELECT * FROM quiz_stats WHERE user_id = $1 AND flashcard_id = $2";
-      const statsQuery = await pool.query(query, [userId, flashcardId]);
+      const query = "SELECT * FROM quiz_stats WHERE user_id = $1";
+      const statsQuery = await pool.query(query, [userId]);
       const stats = statsQuery.rows.map((row) => ({
         success: row.successful_attempts,
-        fail: row.failed_attempts,
         total: row.total_attempts,
       }));
       return stats;

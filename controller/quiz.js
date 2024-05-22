@@ -7,8 +7,8 @@ class Controller {
 
   saveStats = async (req, res) => {
     try {
-      const { userId, flashcardId, success, fail } = req.body;
-      await this.service.saveStats(userId, flashcardId, success, fail);
+      const { userId, success, total } = req.body;
+      await this.service.saveStats(userId, success, total);
       res.status(200).json({ message: "OK" });
     } catch (error) {
       console.error("Error saving stats:", error.message);
