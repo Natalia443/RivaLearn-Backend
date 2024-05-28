@@ -138,7 +138,7 @@ class UserDAO {
     try {
       const query =
         "UPDATE quiz_stats SET successful_attempts = successful_attempts + $1, total_attempts = total_attempts + $2 WHERE user_id = $3";
-      await pool.query(query, [success, userId, total]);
+      await pool.query(query, [success, total, userId]);
     } catch (error) {
       throw error;
     }
