@@ -154,7 +154,6 @@ class UserDAO {
           return {
             flashcard: flashcardName,
             success: row.successful_attempts,
-            fail: row.failed_attempts,
             total: row.total_attempts,
           };
         })
