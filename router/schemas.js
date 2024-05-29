@@ -70,4 +70,23 @@
  *          - vocab
  *          - sourceLang
  *          - targetLang
+ *      QuizSchema:
+ *        type: object
+ *        properties:
+ *          userId:
+ *            type: integer
+ *            format: int64
+ *            description: ID del usuario
+ *          success:
+ *            type: integer
+ *            format: int64
+ *            description: Cantidad de aciertos
+ *          total:
+ *            type: integer
+ *            format: int64
+ *            description: Total de intentos
+ *        required:
+ *          - userId
+ *          - success
+ *          - total
  */

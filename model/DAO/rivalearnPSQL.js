@@ -129,7 +129,7 @@ class UserDAO {
       const query =
         "INSERT INTO quiz_stats(user_id, successful_attempts, total_attempts) VALUES($1, $2, $3)";
       await pool.query(query, [userId, success, total]);
-    } catch (error) {
+    } catch (error) {c
       throw error;
     }
   }
@@ -137,8 +137,8 @@ class UserDAO {
   async changeStats(userId, success, total) {
     try {
       const query =
-        "UPDATE quiz_stats SET successful_attempts = successful_attempts + $1, total_attempts = total_attempts + $2 WHERE user_id = $3";
-      await pool.query(query, [success, total, userId]);
+        "UPDATE quiz_stats SET successful_attempts = successful_attempts + $2, total_attempts = total_attempts + $3 WHERE user_id = $1";
+      await pool.query(query, [userId, success, total]);
     } catch (error) {
       throw error;
     }
@@ -148,16 +148,11 @@ class UserDAO {
     try {
       const query = "SELECT * FROM quiz_stats WHERE user_id = $1";
       const statsQuery = await pool.query(query, [userId]);
-      const stats = await Promise.all(
-        statsQuery.rows.map(async (row) => {
-          const flashcardName = await this.getFlashcardName(row.flashcard_id);
-          return {
-            flashcard: flashcardName,
-            success: row.successful_attempts,
-            total: row.total_attempts,
-          };
-        })
-      );
+      const stats =
+        statsQuery.rows.map((row) => ({   
+          success: row.successful_attempts,
+          total: row.total_attempts
+        }));
       return stats;
     } catch (error) {
       throw error;
