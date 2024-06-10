@@ -36,7 +36,6 @@ class Service {
   async saveFlashcard(deckId, vocab, sourceLang, targetLang) {
     try {
       let sourceToTargetCode = await this.formatLangCode(sourceLang);
-      let targetToSourceCode = await this.formatLangCode(targetLang);
       const translatedVocab = await this.deeplApiClient.translate(
         vocab,
         sourceLang,
@@ -51,7 +50,7 @@ class Service {
       const targetLangSentence = await this.deeplApiClient.translate(
         sentence,
         "en",
-        targetToSourceCode
+        targetLang
       );
       await this.model.saveFlashcard(
         deckId,
