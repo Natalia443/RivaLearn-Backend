@@ -18,8 +18,8 @@ class Controller {
 
   createStory = async (req, res) => {
     try {
-      const { lang, words } = req.body;
-      const response = await this.service.createStory(lang, words);
+      const { words } = req.body;
+      const response = await this.service.createStory(words);
       res.json(response);
     } catch (error) {
       console.error("Error fetching Gemini API:", error.message);
