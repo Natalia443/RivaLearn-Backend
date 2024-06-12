@@ -28,10 +28,11 @@ class Gemini {
   async createStory(words) {
     try {
       const wordsList = words.map((word) => word.vocab).join(", ");
-      console.log(wordsList);
       const prompt = `Estamos desarrollando una app que crea historias con palabras de vocabulario nuevas para estudiantes novatos de idiomas. Quiero que me escribas una historia que contenga estas palabras : ${wordsList} y la historia este escrita en el idioma de las palabras que te estoy enviando.`;
       const result = await this.model.generateContent(prompt);
-      return result.response.text();
+      let story = await result.response.text();
+      story = story.replace(/(\n|\n\n|\*\*|\\"|")/g, "");
+      return story;
     } catch (error) {
       console.error(error);
       throw new Error(`Error fetching Gemini API: ${error}.`);
