@@ -29,7 +29,7 @@ class Gemini {
     try {
       const wordsList = words.map((word) => word.vocab).join(", ");
       console.log(wordsList);
-      const prompt = `Escribime una historia que contenga estas palabras y este escrita en el idioma de las mismas: ${wordsList}`;
+      const prompt = `Estamos desarrollando una app que crea historias con palabras de vocabulario nuevas para estudiantes novatos de idiomas. Quiero que me escribas una historia que contenga estas palabras : ${wordsList} y la historia este escrita en el idioma de las palabras que te estoy enviando.`;
       const result = await this.model.generateContent(prompt);
       return result.response.text();
     } catch (error) {
