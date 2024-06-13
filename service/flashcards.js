@@ -18,6 +18,18 @@ class Service {
     }
   }
 
+  
+  async getFlashcardById(flashcardId) {
+    try {
+      const flashcard = await this.model.getFlashcardById(flashcardId);
+      return flashcard;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+
   async getSentence(sourceLang, word) {
     let englishWord;
     if (sourceLang !== "en") {

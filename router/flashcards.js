@@ -27,6 +27,7 @@ class Router {
      *      500:
      *        description: Error de servidor
      */
+
     this.router.post("/create", this.controller.saveFlashcard);
     /**
      * @swagger
@@ -43,9 +44,29 @@ class Router {
      *            $ref: '#/components/schemas/FlashcardSchema'
      *    responses:
      *      200:
-     *        description: Usuario registrado con exito
+     *        description: Flashcard creada con éxito
      *      400:
-     *        description: Error en la carga del usuario
+     *        description: Error en la creación de la flashcard
+     *      500:
+     *        description: Error de servidor
+     */
+
+    this.router.get("/detail/:flashcardId" , this.controller.getFlashcardById);
+    /**
+     * @swagger
+     * /api/flashcards/detail/{id}:
+     *  get:
+     *    summary: Obtener los detalles de una flashcard mediante su id
+     *    tags:
+     *      - Flashcard
+     *    parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *        description: ID de la flashcard
+     *    responses:
+     *      200:
+     *        description: Detalles de la flashcard obtenidos con éxito
      *      500:
      *        description: Error de servidor
      */

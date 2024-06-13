@@ -92,6 +92,19 @@ class UserDAO {
     }
   }
 
+
+async getFlashcardById(flashcardId) {
+  try{
+    const query = 'SELECT * FROM flashcards WHERE id = $1';
+    const result = await pool.query(query, [flashcardId]);
+    return result.rows[0];
+  } catch(error){
+    throw error;
+  }
+ 
+}
+
+
   async saveFlashcard(
     deckId,
     vocab,
