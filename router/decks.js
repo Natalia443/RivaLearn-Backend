@@ -32,7 +32,7 @@ class Router {
      *        description: error de servidor
      */
     this.router.post("/create", this.controller.saveDeck);
-   /**
+    /**
      * @swagger
      * /api/decks/create:
      *  post:

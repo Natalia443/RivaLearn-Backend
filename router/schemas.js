@@ -89,4 +89,30 @@
  *          - userId
  *          - success
  *          - total
+ *      ChatSchema:
+ *        type: object
+ *        properties:
+ *          prompt:
+ *            type: string
+ *            description: mensaje a enviar al chatBot
+ *        required:
+ *          - prompt
+ *      StorySchema:
+ *        type: object
+ *        properties:
+ *          words:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                vocab:
+ *                  type: string
+ *        description: lista de palabras para construir la historia
+ *        required:
+ *           - words
+ *        example:
+ *          words:
+ *            - vocab: "palabra1"
+ *            - vocab: "palabra2"
+ *            - vocab: "palabra3"       
  */
