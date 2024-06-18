@@ -38,8 +38,18 @@ class Controller {
       console.error("Error fetching flashcard by id:", error.message);
       res.status(400).json({ error: error.message });
     }
-};
+  };
 
+  deleteFlashcard = async (req, res) => {
+    try {
+      const { flashcardId } = req.params;
+      await this.service.deleteFlashcard(flashcardId);
+      res.status(200).json({  "message": "OK"});
+    } catch (error) {
+      console.error("Error deleting flashcard:", error.message);
+      res.status(400).json({ error: error.message });
+    }
+  };
 }
 
 

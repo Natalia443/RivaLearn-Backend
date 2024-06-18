@@ -71,6 +71,28 @@ class Router {
      *        description: Error de servidor
      */
 
+    this.router.delete("/delete/:flashcardId", this.controller.deleteFlashcard);
+    /**
+     * @swagger
+     * /api/flashcards/delete/{flashcardId}:
+     *  delete:
+     *    summary: Eliminar flashcard por Id
+     *    tags:
+     *      - Flashcard
+     *    parameters:
+     *      - in: path
+     *        name: flashcardId
+     *        required: true
+     *        description: ID de la flashcard
+     *    responses:
+     *      200:
+     *        description: Flashcard eliminada con éxito
+     *      400:
+     *        description: Error al eliminar Flashcard
+     *      500:
+     *        description: Error de servidor
+     */
+
     return this.router;
   }
 }

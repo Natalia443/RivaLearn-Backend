@@ -26,6 +26,17 @@ class Controller {
       res.status(400).json({ error: error.message });
     }
   };
+
+  deleteDeck = async (req, res) => {
+    try {
+      const { deckId } = req.params;
+      await this.service.deleteDeck(deckId);
+      res.status(200).json({  "message": "OK"});
+    } catch (error) {
+      console.error("Error deleting deck:", error.message);
+      res.status(400).json({ error: error.message });
+    }
+  };
 }
 
 export default Controller;

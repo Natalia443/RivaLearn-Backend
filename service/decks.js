@@ -21,6 +21,14 @@ class Service {
       throw error;
     }
   }
+
+  async deleteDeck(deckId) {
+    try {
+      await this.model.deleteDeck(deckId);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default Service;

@@ -17,7 +17,6 @@ class Service {
       throw error;
     }
   }
-
   
   async getFlashcardById(flashcardId) {
     try {
@@ -27,8 +26,6 @@ class Service {
       throw error;
     }
   }
-
-
 
   async getSentence(sourceLang, word) {
     let englishWord;
@@ -71,6 +68,14 @@ class Service {
         sourceLangSentence,
         targetLangSentence
       );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteFlashcard(flashcardId) {
+    try {
+      await this.model.deleteFlashcard(flashcardId);
     } catch (error) {
       throw error;
     }

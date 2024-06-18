@@ -75,6 +75,21 @@ class UserDAO {
     }
   }
 
+  async deleteDeck(deckId) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        await client.query('DELETE FROM flashcards WHERE deck_id = $1', [deckId]);
+        await client.query('DELETE FROM decks WHERE id = $1', [deckId]);
+        await client.query('COMMIT');
+    } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+    } finally {
+        client.release();
+    }
+  }
+
   async getFlashcards(deckId) {
     try {
       const query = "SELECT * FROM flashcards WHERE deck_id = $1";
@@ -92,26 +107,19 @@ class UserDAO {
     }
   }
 
-
-async getFlashcardById(flashcardId) {
-  try{
-    const query = 'SELECT * FROM flashcards WHERE id = $1';
-    const result = await pool.query(query, [flashcardId]);
-    return result.rows[0];
-  } catch(error){
-    throw error;
+  async getFlashcardById(flashcardId) {
+    try{
+      const query = 'SELECT * FROM flashcards WHERE id = $1';
+      const result = await pool.query(query, [flashcardId]);
+      return result.rows[0];
+    } catch(error){
+      throw error;
+    }
+  
   }
- 
-}
 
-
-  async saveFlashcard(
-    deckId,
-    vocab,
-    translatedVocab,
-    sourceLangSentence,
-    targetLangSentence
-  ) {
+  async saveFlashcard(deckId, vocab, translatedVocab,
+          sourceLangSentence, targetLangSentence) {
     try {
       const query =
         "INSERT INTO flashcards(deck_id, vocab, vocab_translated, vocab_example, vocab_example_translated) VALUES($1, $2, $3, $4, $5)";
@@ -134,6 +142,20 @@ async getFlashcardById(flashcardId) {
       return flashcard.rows[0].vocab;
     } catch (error) {
       throw error;
+    }
+  }
+
+  async deleteFlashcard(flashcardId) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        await client.query('DELETE FROM flashcards WHERE id = $1', [flashcardId]);
+        await client.query('COMMIT');
+    } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+    } finally {
+        client.release();
     }
   }
 

@@ -53,6 +53,30 @@ class Router {
      *      500:
      *        description: error de servidor
      */
+    this.router.delete("/delete/:deckId", this.controller.deleteDeck);
+    /**
+     * @swagger
+     * /api/decks/delete/{deckId}:
+     *  delete:
+     *    summary: Eliminar Deck por Id
+     *    tags:
+     *      - Deck
+     *    parameters:
+     *      - in: path
+     *        name: deckId
+     *        schema:
+     *          type: integer
+     *        required: true
+     *        description: Id del deck
+     *    responses: 
+     *      200:
+     *        description: Deck eliminado con exito
+     *      400:
+     *        description: Error al eliminar el deck
+     *      500:
+     *        description: error de servidor
+     */
+
     return this.router;
   }
 }
