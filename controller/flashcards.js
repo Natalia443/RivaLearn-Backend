@@ -30,9 +30,7 @@ class Controller {
   getFlashcardById = async (req, res) => {
     try {
       const { flashcardId } = req.params;
-      console.log('Flashcard ID:', flashcardId); // Agregar esta línea para imprimir el ID de la flashcard
       const flashcard = await this.service.getFlashcardById(flashcardId);
-      console.log('Flashcard:', flashcard); // Agregar esta línea para imprimir la flashcard obtenida
       res.json(flashcard);
     } catch (error) {
       console.error("Error fetching flashcard by id:", error.message);
@@ -44,13 +42,12 @@ class Controller {
     try {
       const { flashcardId } = req.params;
       await this.service.deleteFlashcard(flashcardId);
-      res.status(200).json({  "message": "OK"});
+      res.status(200).json({ message: "OK" });
     } catch (error) {
       console.error("Error deleting flashcard:", error.message);
       res.status(400).json({ error: error.message });
     }
   };
 }
-
 
 export default Controller;

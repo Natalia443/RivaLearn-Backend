@@ -28,7 +28,7 @@ class UserDAO {
     try {
       const query = `
         INSERT INTO refresh_tokens (user_id, token, expires_at)
-        VALUES ($1, crypt($2, gen_salt('bf')), NOW() + INTERVAL '7 days')
+        VALUES ($1, $2, NOW() + INTERVAL '7 days')
       `;
       const values = [userId, refreshToken];
       await pool.query(query, values);
@@ -40,13 +40,22 @@ class UserDAO {
   async getValidRefreshToken(userId) {
     try {
       const query = `
-        SELECT * FROM refresh_tokens
+        SELECT token FROM refresh_tokens
         WHERE user_id = $1 AND expires_at > NOW()
-        ORDER BY expires_at DESC
-        LIMIT 1
       `;
       const refreshToken = await pool.query(query, [userId]);
       return refreshToken.rows[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getRefreshTokenExpiryDate(token) {
+    try {
+      const query = `SELECT expires_at FROM refresh_tokens WHERE token = $1 AND expires_at > NOW()`;
+      const values = [token];
+      const expiryDate = await pool.query(query, values);
+      return expiryDate.rows[0].expires_at;
     } catch (error) {
       throw error;
     }
@@ -78,15 +87,15 @@ class UserDAO {
   async deleteDeck(deckId) {
     const client = await pool.connect();
     try {
-        await client.query('BEGIN');
-        await client.query('DELETE FROM flashcards WHERE deck_id = $1', [deckId]);
-        await client.query('DELETE FROM decks WHERE id = $1', [deckId]);
-        await client.query('COMMIT');
+      await client.query("BEGIN");
+      await client.query("DELETE FROM flashcards WHERE deck_id = $1", [deckId]);
+      await client.query("DELETE FROM decks WHERE id = $1", [deckId]);
+      await client.query("COMMIT");
     } catch (error) {
-        await client.query('ROLLBACK');
-        throw error;
+      await client.query("ROLLBACK");
+      throw error;
     } finally {
-        client.release();
+      client.release();
     }
   }
 
@@ -108,18 +117,22 @@ class UserDAO {
   }
 
   async getFlashcardById(flashcardId) {
-    try{
-      const query = 'SELECT * FROM flashcards WHERE id = $1';
+    try {
+      const query = "SELECT * FROM flashcards WHERE id = $1";
       const result = await pool.query(query, [flashcardId]);
       return result.rows[0];
-    } catch(error){
+    } catch (error) {
       throw error;
     }
-  
   }
 
-  async saveFlashcard(deckId, vocab, translatedVocab,
-          sourceLangSentence, targetLangSentence) {
+  async saveFlashcard(
+    deckId,
+    vocab,
+    translatedVocab,
+    sourceLangSentence,
+    targetLangSentence
+  ) {
     try {
       const query =
         "INSERT INTO flashcards(deck_id, vocab, vocab_translated, vocab_example, vocab_example_translated) VALUES($1, $2, $3, $4, $5)";
@@ -148,14 +161,14 @@ class UserDAO {
   async deleteFlashcard(flashcardId) {
     const client = await pool.connect();
     try {
-        await client.query('BEGIN');
-        await client.query('DELETE FROM flashcards WHERE id = $1', [flashcardId]);
-        await client.query('COMMIT');
+      await client.query("BEGIN");
+      await client.query("DELETE FROM flashcards WHERE id = $1", [flashcardId]);
+      await client.query("COMMIT");
     } catch (error) {
-        await client.query('ROLLBACK');
-        throw error;
+      await client.query("ROLLBACK");
+      throw error;
     } finally {
-        client.release();
+      client.release();
     }
   }
 
@@ -164,7 +177,7 @@ class UserDAO {
       const query =
         "INSERT INTO quiz_stats(user_id, successful_attempts, total_attempts) VALUES($1, $2, $3)";
       await pool.query(query, [userId, success, total]);
-    } catch (error) {c
+    } catch (error) {
       throw error;
     }
   }
@@ -183,11 +196,10 @@ class UserDAO {
     try {
       const query = "SELECT * FROM quiz_stats WHERE user_id = $1";
       const statsQuery = await pool.query(query, [userId]);
-      const stats =
-        statsQuery.rows.map((row) => ({   
-          success: row.successful_attempts,
-          total: row.total_attempts
-        }));
+      const stats = statsQuery.rows.map((row) => ({
+        success: row.successful_attempts,
+        total: row.total_attempts,
+      }));
       return stats;
     } catch (error) {
       throw error;

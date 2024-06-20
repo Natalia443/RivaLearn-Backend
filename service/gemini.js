@@ -12,13 +12,9 @@ class Gemini {
 
   async createChat(prompt) {
     try {
-      const chat = this.model.startChat({
-        generationConfig: {
-          maxOutputTokens: 100,
-        },
-      });
+      const chat = this.model.startChat({});
       const result = await chat.sendMessage(prompt);
-      return result.response.text();
+      return result.response.text().replace(/(\n|\n\n|\*\*|\\"|")/g, "");
     } catch (error) {
       console.error(error);
       throw new Error(`Error fetching Gemini API: ${error}.`);

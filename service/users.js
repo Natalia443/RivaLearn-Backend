@@ -25,25 +25,33 @@ class UserService {
   async login(username, password) {
     try {
       const user = await this.model.findUser(username, password);
+      let expiryDate;
       if (!user) {
         throw new Error("Usuario no encontrado o contraseña incorrecta");
       }
-
       const existingRefreshToken = await this.model.getValidRefreshToken(
         user.id
       );
       if (existingRefreshToken) {
+        expiryDate = await this.model.getRefreshTokenExpiryDate(
+          existingRefreshToken.token
+        );
         return {
           access_token: this.generateUserToken(user, "1h"),
           refresh_token: existingRefreshToken.token,
+          expiry_date: expiryDate,
           username: user.username,
           user_id: user.id,
         };
       } else {
         const tokens = this.generateTokens(user);
         await this.saveRefreshToken(user.id, tokens.refresh_token);
+        expiryDate = await this.model.getRefreshTokenExpiryDate(
+          tokens.refresh_token
+        );
         return {
           ...tokens,
+          expiry_date: expiryDate,
           username: user.username,
           user_id: user.id,
         };
