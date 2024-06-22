@@ -17,7 +17,7 @@ class Service {
       throw error;
     }
   }
-  
+
   async getFlashcardById(flashcardId) {
     try {
       const flashcard = await this.model.getFlashcardById(flashcardId);
@@ -89,6 +89,42 @@ class Service {
       formattedCode = "pt-BR";
     }
     return formattedCode;
+  }
+
+  async updateFlashcard(
+    flashcardId,
+    vocab,
+    vocabExample,
+    sourceLang,
+    targetLang
+  ) {
+    let vocabExampleTranslated;
+    const translatedVocab = await this.deeplApiClient.translate(
+      vocab,
+      sourceLang,
+      targetLang
+    );
+    if (vocabExample === "") {
+      vocabExample = await this.getSentence(sourceLang, vocab);
+      vocabExampleTranslated = await this.deeplApiClient.translate(
+        vocabExample,
+        sourceLang,
+        targetLang
+      );
+    } else {
+      vocabExampleTranslated = await this.deeplApiClient.translate(
+        vocabExample,
+        sourceLang,
+        targetLang
+      );
+    }
+    await this.model.updateFlashcard(
+      flashcardId,
+      vocab,
+      translatedVocab,
+      vocabExample,
+      vocabExampleTranslated
+    );
   }
 }
 

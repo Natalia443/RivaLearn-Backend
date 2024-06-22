@@ -99,6 +99,15 @@ class UserDAO {
     }
   }
 
+  async updateDeck(deckId, deckName) {
+    try {
+      const query = "UPDATE decks SET name = $2 WHERE id = $1";
+      await pool.query(query, [deckId, deckName]);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getFlashcards(deckId) {
     try {
       const query = "SELECT * FROM flashcards WHERE deck_id = $1";
@@ -169,6 +178,28 @@ class UserDAO {
       throw error;
     } finally {
       client.release();
+    }
+  }
+
+  async updateFlashcard(
+    flashcardId,
+    vocab,
+    translatedVocab,
+    vocabExample,
+    vocabExampleTranslated
+  ) {
+    try {
+      const query =
+        "UPDATE flashcards SET vocab = $2, vocab_translated = $3, vocab_example = $4, vocab_example_translated = $5 WHERE id = $1";
+      await pool.query(query, [
+        flashcardId,
+        vocab,
+        translatedVocab,
+        vocabExample,
+        vocabExampleTranslated,
+      ]);
+    } catch (error) {
+      throw error;
     }
   }
 

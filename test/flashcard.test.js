@@ -82,3 +82,28 @@ describe("DELETE", () => {
     await server.stop();
   });
 });
+
+describe("PUT", () => {
+  it("debería editar un flashcard", async () => {
+    const server = new Server(8081);
+    const app = await server.start();
+    const request = supertest(app);
+
+    const update = {
+      flashcardId: 69,
+      vocab: "girl",
+      vocabExample:
+        "The girl smiled brightly as she received her birthday present.",
+      sourceLang: "en",
+      targetLang: "es",
+    };
+
+    const response = await request.put("/api/flashcards/update").send(update);
+    expect(response.body.message).to.equal("OK");
+    expect(response.status).to.eql(200);
+    console.log(response.body);
+    console.log(`Status: ${response.status}`);
+
+    await server.stop();
+  });
+});

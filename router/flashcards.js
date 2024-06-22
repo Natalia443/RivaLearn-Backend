@@ -51,7 +51,7 @@ class Router {
      *        description: Error de servidor
      */
 
-    this.router.get("/detail/:flashcardId" , this.controller.getFlashcardById);
+    this.router.get("/detail/:flashcardId", this.controller.getFlashcardById);
     /**
      * @swagger
      * /api/flashcards/detail/{id}:
@@ -93,6 +93,44 @@ class Router {
      *        description: Error de servidor
      */
 
+    this.router.put("/update", this.controller.updateFlashcard);
+    /**
+     * @swagger
+     * /api/flashcards/update:
+     *  put:
+     *    summary: Editar flashcards
+     *    tags:
+     *      - Flashcard
+     *    requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *          schema:
+     *            type: object
+     *            properties:
+     *              flashcardId:
+     *                type: integer
+     *                description: ID de la flashcard
+     *              vocab:
+     *                type: string
+     *                description: Palabra
+     *              vocabExample:
+     *                type: string
+     *                description: Frase de ejemplo
+     *              sourceLang:
+     *                type: string
+     *                description: Idioma de origen
+     *              targetLang:
+     *                type: string
+     *                description: Idioma de destino
+     *    responses:
+     *      200:
+     *        description: Flashcard editada con éxito
+     *      400:
+     *        description: Error en la edicion de la flashcard
+     *      500:
+     *        description: Error de servidor
+     */
     return this.router;
   }
 }

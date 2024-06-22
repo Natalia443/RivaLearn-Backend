@@ -20,7 +20,7 @@ class Controller {
     try {
       const { userId, deckname } = req.body;
       await this.service.saveDeck(userId, deckname);
-      res.status(200).json({  "message": "OK"});
+      res.status(200).json({ message: "OK" });
     } catch (error) {
       console.error("Error saving deck:", error.message);
       res.status(400).json({ error: error.message });
@@ -31,9 +31,20 @@ class Controller {
     try {
       const { deckId } = req.params;
       await this.service.deleteDeck(deckId);
-      res.status(200).json({  "message": "OK"});
+      res.status(200).json({ message: "OK" });
     } catch (error) {
       console.error("Error deleting deck:", error.message);
+      res.status(400).json({ error: error.message });
+    }
+  };
+
+  updateDeck = async (req, res) => {
+    try {
+      const { deckId, deckName } = req.body;
+      await this.service.updateDeck(deckId, deckName);
+      res.status(200).json({ message: "OK" });
+    } catch (error) {
+      console.error("Error updating deck:", error.message);
       res.status(400).json({ error: error.message });
     }
   };

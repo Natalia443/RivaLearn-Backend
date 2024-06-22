@@ -29,6 +29,14 @@ class Service {
       throw error;
     }
   }
+
+  async updateDeck(deckId, deckName) {
+    try {
+      await this.model.updateDeck(deckId, deckName);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default Service;

@@ -23,7 +23,7 @@ class Router {
      *          type: integer
      *        required: true
      *        description: Id del usuario
-     *    responses: 
+     *    responses:
      *      200:
      *        description: Listado de decks obtenidos con éxito
      *      400:
@@ -45,7 +45,7 @@ class Router {
      *        application/json:
      *          schema:
      *            $ref: '#/components/schemas/DeckSchema'
-     *    responses: 
+     *    responses:
      *      200:
      *        description: creacion de Deck con éxito
      *      400:
@@ -68,13 +68,44 @@ class Router {
      *          type: integer
      *        required: true
      *        description: Id del deck
-     *    responses: 
+     *    responses:
      *      200:
      *        description: Deck eliminado con exito
      *      400:
      *        description: Error al eliminar el deck
      *      500:
      *        description: error de servidor
+     */
+
+    this.router.put("/update", this.controller.updateDeck);
+    /**
+     * @swagger
+     * /api/decks/update:
+     *  put:
+     *    summary: Editar deck
+     *    tags:
+     *      - Deck
+     *    requestBody:
+     *      required: true
+     *      content:
+     *        application/json:
+     *          schema:
+     *            type: object
+     *            properties:
+     *              deckId:
+     *                type: integer
+     *                format: int64
+     *                description: ID del deck
+     *              deckName:
+     *                type: string
+     *                description: Nombre del deck
+     *    responses:
+     *      200:
+     *        description: Deck editado con éxito
+     *      400:
+     *        description: Error en la edición del deck
+     *      500:
+     *        description: Error del servidor
      */
 
     return this.router;

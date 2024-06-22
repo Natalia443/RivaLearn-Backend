@@ -48,6 +48,24 @@ class Controller {
       res.status(400).json({ error: error.message });
     }
   };
+
+  updateFlashcard = async (req, res) => {
+    try {
+      const { flashcardId, vocab, vocabExample, sourceLang, targetLang } =
+        req.body;
+      await this.service.updateFlashcard(
+        flashcardId,
+        vocab,
+        vocabExample,
+        sourceLang,
+        targetLang
+      );
+      res.status(200).json({ message: "OK" });
+    } catch (error) {
+      console.error("Error deleting flashcard:", error.message);
+      res.status(400).json({ error: error.message });
+    }
+  };
 }
 
 export default Controller;
