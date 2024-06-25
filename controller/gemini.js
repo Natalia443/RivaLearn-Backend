@@ -7,8 +7,8 @@ class Controller {
 
   createChat = async (req, res) => {
     try {
-      const { prompt } = req.body;
-      const response = await this.service.createChat(prompt);
+      const { prompt, history } = req.body;
+      const response = await this.service.createChat(prompt, history);
       res.json(response);
     } catch (error) {
       console.error("Error fetching Gemini API:", error.message);

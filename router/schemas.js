@@ -95,8 +95,25 @@
  *          prompt:
  *            type: string
  *            description: mensaje a enviar al chatBot
+ *          history:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                role:
+ *                  type: string
+ *                  enum: [user, model]
+ *                parts:
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                      text:
+ *                        type: string
+ *                  description: partes del mensaje en la conversación
  *        required:
  *          - prompt
+ *          - history
  *      StorySchema:
  *        type: object
  *        properties:
@@ -114,5 +131,5 @@
  *          words:
  *            - vocab: "palabra1"
  *            - vocab: "palabra2"
- *            - vocab: "palabra3"       
+ *            - vocab: "palabra3"
  */
