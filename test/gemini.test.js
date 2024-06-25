@@ -29,12 +29,21 @@ describe("POST", () => {
     const app = await server.start();
     const request = supertest(app);
 
-    const prompt = {
-      prompt: "que significa 'lawyer' en español?",
-    };
-    console.log(prompt);
+    const prompt = "que significa?";
+    const history = [
+      {
+        role: "user",
+        parts: [
+          {
+            text: "lawyer",
+          },
+        ],
+      },
+    ];
 
-    const response = await request.post("/api/gemini/chat").send(prompt);
+    const response = await request
+      .post("/api/gemini/chat")
+      .send({ prompt, history });
     expect(response.body).to.not.be.undefined;
     expect(response.status).to.eql(200);
     console.log(response.body);
